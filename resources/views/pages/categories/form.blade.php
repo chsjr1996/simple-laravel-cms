@@ -10,7 +10,7 @@
 <div class="card">
     <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
-            <p class="m-0">{{ __('New category') }}</p>
+            <p class="m-0">{{ $isNew ? __('New category') : __('Update category') }}</p>
         </div>
     </div>
 
@@ -21,8 +21,8 @@
         @endif
         <div class="card-body">
             <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" class="form-control" placeholder="Enter with the category name" value="{{ $name }}" />
+                <label for="name">{{ __('Name') }}</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="{{ __('Enter with the category name') }}" value="{{ $name }}" />
                 @if ($errors->has('name'))
                     @foreach ($errors->all() as $error)
                         <span class="text-danger">{{ $error }}</span>
@@ -33,7 +33,7 @@
 
         <div class="card-footer">
             <button type="submit" class="btn btn-success">
-                {{ $isNew ? 'Create' : 'Update' }}
+                {{ $isNew ? __('Create') : __('Update') }}
             </button>
         </div>
     </form>
