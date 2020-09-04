@@ -37,9 +37,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('categories.index') }}">Categories</a>
-                            </li>
                         @endauth
                     </ul>
 
@@ -80,34 +77,32 @@
         </nav>
 
         <main class="py-4">
+            <div class="container">
+                @include('components.errors-alert')
+                @include('components.success-alert')
+            </div>
 
-            @if ($errors->any())
+            @auth
                 <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-md-8 alert alert-danger">
-                            <h2>Some errors in your request...</h2>
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                                @endforeach
+                    <div class="row">
+                        <div class="col-md-4">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <a href="">Posts</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="{{ route('categories.index') }}">Categories</a>
+                                </li>
                             </ul>
                         </div>
-                    </div>
-                </div>
-            @endif
-
-            @if (session('title') && session('message'))
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-md-8 alert alert-success">
-                            <h2>{{ session('title') }}</h2>
-                            <p>{{ session('message') }}</p>
+                        <div class="col-md-8">
+                            @yield('content')
                         </div>
                     </div>
                 </div>
-            @endif
-
-            @yield('content')
+            @else
+                @yield('content')
+            @endauth
         </main>
     </div>
 </body>
