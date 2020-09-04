@@ -20,4 +20,8 @@ Route::get('/', function () {
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('categories', 'CategoryController')->middleware('auth');
+
+Route::middleware('auth')->group(function () {
+    Route::resource('categories', 'CategoryController');
+    Route::resource('posts', 'PostController');
+});
