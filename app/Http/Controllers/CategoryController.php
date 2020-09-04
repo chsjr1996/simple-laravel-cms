@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Category\Create;
+use App\Http\Requests\Category\Update;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -34,12 +36,8 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Create $request)
     {
-        $request->validate([
-            'name' => 'required|unique:categories'
-        ]);
-
         if(! (new Category())->create($request->all())) {
             return redirect()
                 ->back()
@@ -81,15 +79,9 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Update $request, Category $category)
     {
-        $request->validate([
-            'name' => 'required|unique:categories,name,'. $category->id
-        ]);
-
-        $category->fill($request->all());
-
-        if (!$category->save()) {
+        if (!$category->fill($request->all())->save()) {
             return redirect()
                 ->back()
                 ->withErrors(['msg1' => 'An error occurred on category update, try again later...']);
