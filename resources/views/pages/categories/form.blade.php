@@ -22,12 +22,8 @@
         <div class="card-body">
             <div class="form-group">
                 <label for="name">{{ __('Name') }}</label>
-                <input type="text" id="name" name="name" class="form-control" placeholder="{{ __('Enter with the category name') }}" value="{{ $name }}" />
-                @if ($errors->has('name'))
-                    @foreach ($errors->all() as $error)
-                        <span class="text-danger">{{ $error }}</span>
-                    @endforeach
-                @endif
+                <input type="text" id="name" name="name" class="form-control cm-js-focus" placeholder="{{ __('Enter with the category name') }}" value="{{ $name }}" />
+                <x-field-validation-error :field="'name'" />
             </div>
         </div>
 

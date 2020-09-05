@@ -18,7 +18,7 @@
             </div>
         @endif
 
-        @if ($categories ?? null)
+        @if ($categories && count($categories) > 0 ?? null)
             <ul class="list-group">
                 @foreach ($categories as $category)
                     <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -35,7 +35,7 @@
                 @endforeach
             </ul>
         @else
-            <p class="text-center">{{ __('No category registered') }}</p>
+            <p class="text-center m-0">{{ __('No category registered') }}</p>
         @endif
     </div>
 </div>
