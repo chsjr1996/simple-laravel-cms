@@ -49722,6 +49722,8 @@ module.exports = function(module) {
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./common */ "./resources/js/common.js");
+
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /**
  * The following block of code may be used to automatically register your
@@ -49788,6 +49790,32 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/common.js":
+/*!********************************!*\
+  !*** ./resources/js/common.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Common Javascript functions (cm-js)
+ */
+$(document).ready(function () {
+  /**
+   * Input helpers
+   */
+  $('.cm-js-focus').focus();
+  /**
+   * Actions
+   */
+
+  $('.cm-js-close-alert').on('click', function () {
+    $('.alert-container').remove();
+  });
+});
 
 /***/ }),
 
