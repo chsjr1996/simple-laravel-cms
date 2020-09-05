@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Category\Create;
+use App\Http\Requests\Category\Store;
 use App\Http\Requests\Category\Update;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -33,10 +33,10 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Create  $request
+     * @param  Store  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Create $request)
+    public function store(Store $request)
     {
         if(! (new Category())->create($request->all())) {
             return redirect()
