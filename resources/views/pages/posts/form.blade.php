@@ -9,6 +9,23 @@
     $action = $isNew ? route('posts.store') : route('posts.update', $post->id);
 @endphp
 
+@section('head.scripts.1')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.4/trix.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    setTimeout(() => {
+        flatpickr("#published_at", {
+            enableTime: true
+        });
+    }, 100);
+</script>
+@endsection
+
+@section('head.styles.1')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.4/trix.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+@endsection
+
 @section('content')
 <div class="card">
     <div class="card-header">
@@ -37,7 +54,8 @@
 
             <div class="form-group">
                 <label for="content">{{ __('Content') }}</label>
-                <textarea id="content" name="content" class="form-control" rows="5" placeholder="{{ __('Enter with the post content') }}">{{ $content }}</textarea>
+                <input type="hidden" id="content" name="content" />
+                <trix-editor input='content'></trix-editor>
                 <x-field-validation-error :field="'content'" />
             </div>
 
