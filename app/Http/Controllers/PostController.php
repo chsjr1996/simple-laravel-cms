@@ -104,7 +104,7 @@ class PostController extends Controller
         $deleted = false;
 
         if ($post->trashed()) {
-            Storage::delete("public/{$post->image}");
+            Storage::disk('public')->delete($post->image);
             $deleted = $post->forceDelete();
         } else {
             $deleted = $post->delete();
