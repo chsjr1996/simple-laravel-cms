@@ -53,7 +53,7 @@ class PostController extends Controller
         $post->save();
 
         return redirect(route('posts.index'))
-            ->with(['msg1' => 'Post registered successfully.']);
+            ->with(['title' => 'Success', 'message' => 'Post registered successfully.']);
     }
 
     /**
