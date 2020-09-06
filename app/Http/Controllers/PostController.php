@@ -6,8 +6,6 @@ use App\Http\Requests\Post\Store;
 use App\Http\Requests\Post\Update;
 use App\Models\Post;
 use App\Services\UploadFileService\UploadFileService;
-use Illuminate\Http\Request;
-use Storage;
 
 class PostController extends Controller
 {
@@ -103,7 +101,8 @@ class PostController extends Controller
                 "public"
             );
 
-            // Save image path
+            // Delete old and save a new image path
+            $post->deleteImage();
             $post->image = $path;
             $post->save();
         }
@@ -126,7 +125,7 @@ class PostController extends Controller
         $deleted = false;
 
         if ($post->trashed()) {
-            Storage::disk('public')->delete($post->image);
+            $post->deleteImage();
             $deleted = $post->forceDelete();
         } else {
             $deleted = $post->delete();
