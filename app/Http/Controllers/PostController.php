@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Post\Store;
+use App\Http\Requests\Post\Update;
 use App\Models\Post;
 use App\Services\UploadFileService\UploadFileService;
 use Illuminate\Http\Request;
@@ -76,7 +77,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('pages.posts.form', compact('post'));
     }
 
     /**
@@ -86,9 +87,30 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Update $request, Post $post)
     {
-        //
+        if (!$post->fill($request->all())->save()) {
+            return redirect()
+                ->back()
+                ->withErrors(['msg1' => 'An error occurred on category update, try again later...']);
+        }
+
+        // Upload file
+        if ($request->hasFile('image')) {
+            $path = UploadFileService::run(
+                $request->file('image'),
+                "posts/{$post->id}",
+                "public"
+            );
+
+            // Save image path
+            $post->image = $path;
+            $post->save();
+        }
+
+        return redirect()
+            ->back()
+            ->with(['title' => 'Success', 'message' => 'Category updated successfully']);
     }
 
     /**

@@ -6,6 +6,7 @@
     $description = isset($post) ? $post->description : '';
     $content = isset($post) ? $post->content : '';
     $publishedAt = isset($post) ? $post->published_at : '';
+    $image = isset($post) ? $post->image : '';
     $action = $isNew ? route('posts.store') : route('posts.update', $post->id);
 @endphp
 
@@ -54,7 +55,7 @@
 
             <div class="form-group">
                 <label for="content">{{ __('Content') }}</label>
-                <input type="hidden" id="content" name="content" />
+                <input type="hidden" id="content" name="content" value="{{ $content }}" />
                 <trix-editor input='content'></trix-editor>
                 <x-field-validation-error :field="'content'" />
             </div>
@@ -68,6 +69,13 @@
                 <label for="image">{{ __('Image') }}</label>
                 <input type="file" id="image" name="image" class="form-control" />
                 <x-field-validation-error :field="'image'" />
+                @if ($image)
+                    <div class="mt-3">
+                        <a href="{{ asset('storage/'.$image) }}" target="_blank">
+                            <img src="{{ asset('storage/'.$image) }}" alt="{{ __('Post') }} - {{ $title }} {{ __('image') }}" width="120px" height="60px" />
+                        </a>
+                    </div>
+                @endif
             </div>
         </div>
 
