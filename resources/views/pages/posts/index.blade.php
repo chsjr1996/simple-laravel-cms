@@ -32,7 +32,9 @@
             <table class="table">
                 <thead>
                     <th>{{ __('Image') }}</th>
-                    <th colspan="2">{{ __('Title') }}</th>
+                    <th>{{ __('Title') }}</th>
+                    <th>{{ __('Category') }}</th>
+                    <th></th>
                 </thead>
                 <tbody>
                     @foreach ($posts as $post)
@@ -42,6 +44,11 @@
                             </td>
                             <td>
                                 {{ $post->title }}
+                            </td>
+                            <td>
+                                <a href="{{ route('categories.edit', $post->category->id) }}">
+                                    {{ $post->category->name }}
+                                </a>
                             </td>
                             <td class="text-right">
                                 <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-primary">

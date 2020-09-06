@@ -2,6 +2,7 @@
 
 @php
     $isNew = isset($post) ? false : true;
+    $categoryId = isset($post) ? $post->category_id : 0;
     $title = isset($post) ? $post->title : '';
     $description = isset($post) ? $post->description : '';
     $content = isset($post) ? $post->content : '';
@@ -76,6 +77,17 @@
                         </a>
                     </div>
                 @endif
+            </div>
+
+            <div class="form-group">
+                <label for="category_id">{{ __('Category') }}</label>
+                <select name="category_id" id="category_id" class="form-control">
+                    <option value="">{{ __('Choice one category') }}</option>
+                    @foreach ($categories ?? [] as $category)
+                        @php $selected = $categoryId === $category->id ? 'selected' : ''; @endphp
+                        <option value="{{ $category->id }}" {{ $selected }}>{{ $category->name }}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
 

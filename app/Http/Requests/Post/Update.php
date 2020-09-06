@@ -24,6 +24,7 @@ class Update extends FormRequest
     public function rules()
     {
         return [
+            'category_id' => 'required',
             'title' => 'required|unique:posts,title,'.$this->post->id,
             'description' => 'required',
             'content' => 'required',

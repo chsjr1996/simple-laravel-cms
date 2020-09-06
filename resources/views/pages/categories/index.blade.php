@@ -19,21 +19,29 @@
         @endif
 
         @if ($categories && count($categories) > 0 ?? null)
-            <ul class="list-group">
-                @foreach ($categories as $category)
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ $category->name }}
-                        <div class="d-flex">
-                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-primary mr-2">
-                                {{ __('Edit') }}
-                            </a>
-                            <button type="button" class="btn btn-danger" onclick="openExclusionModal('{{ route('categories.destroy', $category->id) }}')" data-toggle="modal" data-target="#deletionModal">
-                                {{ __('Delete') }}
-                            </button>
-                        </div>
-                    </li>
-                @endforeach
-            </ul>
+            <table class="table">
+                <thead>
+                    <th>{{ __('Name') }}</th>
+                    <th>{{ __('Posts count') }}</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    @foreach ($categories as $category)
+                        <tr>
+                            <td>{{ $category->name }}</td>
+                            <td>{{ $category->posts->count() }}</td>
+                            <td>
+                                <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-primary mr-2">
+                                    {{ __('Edit') }}
+                                </a>
+                                <button type="button" class="btn btn-danger" onclick="openExclusionModal('{{ route('categories.destroy', $category->id) }}')" data-toggle="modal" data-target="#deletionModal">
+                                    {{ __('Delete') }}
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         @else
             <p class="text-center m-0">{{ __('No category registered') }}</p>
         @endif

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Post\Store;
 use App\Http\Requests\Post\Update;
+use App\Models\Category;
 use App\Models\Post;
 use App\Services\UploadFileService\UploadFileService;
 
@@ -27,7 +28,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('pages.posts.form');
+        $categories = Category::all();
+        return view('pages.posts.form', compact('categories'));
     }
 
     /**
@@ -75,7 +77,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('pages.posts.form', compact('post'));
+        $categories = Category::all();
+        return view('pages.posts.form', compact('post', 'categories'));
     }
 
     /**

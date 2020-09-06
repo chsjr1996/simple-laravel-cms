@@ -24,6 +24,7 @@ class Store extends FormRequest
     public function rules()
     {
         return [
+            'category_id' => 'required',
             'title' => 'required|unique:posts',
             'description' => 'required',
             'content' => 'required',

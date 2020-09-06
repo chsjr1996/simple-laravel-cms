@@ -15,12 +15,16 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('category_id')->unsigned();
             $table->string('title');
             $table->string('description');
             $table->text('content');
             $table->string('image')->default('');
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
+
+            // Relationships
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 
