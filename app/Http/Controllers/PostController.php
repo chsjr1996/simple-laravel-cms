@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Post\Store;
 use App\Models\Post;
+use App\Services\UploadFileService\UploadFileService;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -14,7 +16,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+        return view('pages.posts.index', compact('posts'));
     }
 
     /**
@@ -24,18 +27,33 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.posts.form');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Store $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Store $request)
     {
-        //
+        // Create post
+        $post = Post::create($request->all());
+
+        // Upload file
+        $path = UploadFileService::run(
+            $request->file('image'),
+            "posts/{$post->id}",
+            "public"
+        );
+
+        // Save image path
+        $post->image = $path;
+        $post->save();
+
+        return redirect(route('posts.index'))
+            ->with(['msg1' => 'Post registered successfully.']);
     }
 
     /**
@@ -78,8 +96,51 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
-        //
+        $post = Post::withTrashed()->find($id);
+
+        $deleted = false;
+
+        if ($post->trashed()) {
+           $deleted = $post->forceDelete();
+        } else {
+           $deleted = $post->delete();
+        }
+
+        if (!$deleted) {
+            return redirect()
+                ->back()
+                ->withErrors(['msg1' => 'An error occurred on post delete, try again later...']);
+        }
+
+        return redirect()
+            ->back()
+            ->with(['title' => 'Success', 'message' => 'Post deleted successfully']);
+    }
+
+    /**
+     * Show trashed resources
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function trashed()
+    {
+        $posts = Post::onlyTrashed()->get();
+        return view('pages.posts.trashed', compact('posts'));
+    }
+
+    /**
+     * Restore a deleted post
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        Post::withTrashed()->find($id)->restore();
+
+        return redirect()
+            ->back()
+            ->with(['title' => 'Success', 'message' => 'Post restored successfully.']);
     }
 }

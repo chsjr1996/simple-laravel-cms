@@ -22,6 +22,14 @@ Route::get('/', function () {
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware('auth')->group(function () {
+
+    // Categories
     Route::resource('categories', 'CategoryController');
+
+    // Posts
     Route::resource('posts', 'PostController');
+    Route::prefix('posts/trashed')->group(function () {
+        Route::get('list', 'PostController@trashed')->name('posts.trashed');
+        Route::get('restore/{post}', 'PostController@restore')->name('posts.restore');
+    });
 });
