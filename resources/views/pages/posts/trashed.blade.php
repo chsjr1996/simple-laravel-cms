@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@include('components.modals.exclusion-modal')
+@include('common.modals.exclusion-modal')
 
 @section('content')
 <div class="card">

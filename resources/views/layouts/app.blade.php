@@ -80,8 +80,8 @@
 
         <main class="py-4">
             <div class="container">
-                @include('components.errors-alert')
-                @include('components.success-alert')
+                @include('common.errors-alert')
+                @include('common.success-alert')
             </div>
 
             @auth
