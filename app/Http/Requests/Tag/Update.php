@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Category;
+namespace App\Http\Requests\Tag;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,7 +24,7 @@ class Update extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:categories,name,'.$this->category->id
+            'name' => 'required|unique:tags,name,'.$this->tag->id
         ];
     }
 }

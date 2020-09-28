@@ -10,6 +10,11 @@ use App\Services\UploadFileService\UploadFileService;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('verify.category.count')->only(['create', 'store']);
+    }
+
     /**
      * Display a listing of the resource.
      *

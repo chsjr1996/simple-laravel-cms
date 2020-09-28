@@ -26,6 +26,9 @@ Route::middleware('auth')->group(function () {
     // Categories
     Route::resource('categories', 'CategoryController');
 
+    // Tags
+    Route::resource('tags', 'TagController');
+
     // Posts
     Route::resource('posts', 'PostController');
     Route::prefix('posts/trashed')->group(function () {
